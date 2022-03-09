@@ -21,6 +21,6 @@ public class GreetingController {
 	public void greeting(HelloMessage message) throws Exception {
 		log.info("message = {}",message);
 		Greeting greeting = new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
-		template.convertAndSend("/topic/greetings/"+message.getRoomId(),greeting);
+		template.convertAndSend("/sub/chat/room/"+message.getRoomId(),greeting);
 	}
 }

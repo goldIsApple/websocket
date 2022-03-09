@@ -12,8 +12,9 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic");
+		//config.enableSimpleBroker("/topic");
 		config.setApplicationDestinationPrefixes("/app");
+		config.enableStompBrokerRelay("/queue","/topic","/exchange","/amq/queue");
 	}
 
 	@Override

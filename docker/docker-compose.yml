@@ -1,0 +1,41 @@
+version: "3.1"
+
+volumes:
+  vol-oracle12-product:
+  vol-oracle12-data:
+  vol-oracle12-fast-recovery:
+  vol-oracle12-redolog:
+
+services:
+  rabbitmq:
+    hostname: rabbitmq
+    container_name: rabbitmq
+    image: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 61613:61613
+    volumes:
+      - ./rabbitmq/enable_plugins:/etc/rabbitmq/enabled_plugins
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+  oracle12:
+    hostname: oracle12
+    container_name: oracle12
+    image: store/oracle/database-enterprise:12.2.0.1-slim
+    expose:
+      - "1521"
+    ports:
+      - 1521:1521
+    environment:
+      - DB_SID=orcl
+      - DB_PASSWD=local1234!
+    volumes:
+      - ./oracle12/configDB.sh:/home/oracle/setup/configDB.sh:ro
+      - ./oracle12/configDBora.sh:/home/oracle/setup/configDBora.sh:ro
+      - ./oracle12/initsql:/home/oracle/setup/sql:ro
+      - ../manual/schema:/home/oracle/setup/happytalk:ro
+      # if you need keep data, un-comment it
+#      - vol-oracle12-product:/u01
+#      - vol-oracle12-data:/u02
+#      - vol-oracle12-fast-recovery:/u03
+#      - vol-oracle12-redolog:/u04

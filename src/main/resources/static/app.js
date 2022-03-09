@@ -17,7 +17,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
-        stompClient.subscribe('/topic/greetings/'+roomId, function (greeting) {
+        stompClient.subscribe('/sub/chat/room/'+roomId, function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
