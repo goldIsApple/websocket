@@ -13,8 +13,8 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@EnableRabbit
+//@Configuration
+//@EnableRabbit
 public class RabbitConfig {
 
 	private static final String CHAT_QUEUE_NAME = "chat.queue";
@@ -59,6 +59,7 @@ public class RabbitConfig {
 	public ConnectionFactory connectionFactory(){
 		CachingConnectionFactory factory = new CachingConnectionFactory();
 		factory.setHost("localhost");
+		factory.setPort(5672);
 		factory.setUsername("guest");
 		factory.setPassword("guest");
 		return factory;
